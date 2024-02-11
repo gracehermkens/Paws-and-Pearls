@@ -31,7 +31,7 @@ public class TitleScreen extends BaseScreen {
         time += delta;
         if (time > 1) {
             if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY) || Gdx.input.justTouched()) {
-                /* switch to game screen here */
+                game.setScreen(new TestScreen(game));
             }
         }
     }
