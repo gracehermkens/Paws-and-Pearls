@@ -12,12 +12,12 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("technical_difficulties.png");
+		img = new Texture("titlescreen2.png");
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1);
+		ScreenUtils.clear(0.9f, 0.9f, 0.9f, 1);
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
