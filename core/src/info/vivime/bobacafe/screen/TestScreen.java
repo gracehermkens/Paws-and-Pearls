@@ -15,7 +15,7 @@ public class TestScreen extends BaseScreen {
         super(game);
         batch = new SpriteBatch();
 
-        image = new Texture("technical_difficulties.png");
+        image = new Texture("cafeBackground.PNG");
     }
 
     @Override
