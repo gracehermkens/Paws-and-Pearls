@@ -1,9 +1,9 @@
-package info.vivime.bobacafe.client;
+package edu.cs.drexel.pearls.client;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import info.vivime.bobacafe.BobaCafe;
+import edu.cs.drexel.pearls.BobaCafe;
 
 public class HtmlLauncher extends GwtApplication {
 

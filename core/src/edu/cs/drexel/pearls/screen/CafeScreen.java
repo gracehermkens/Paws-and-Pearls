@@ -1,21 +1,20 @@
-package info.vivime.bobacafe.screen;
+package edu.cs.drexel.pearls.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import info.vivime.bobacafe.BobaCafe;
-import info.vivime.bobacafe.entities.NPC;
+import edu.cs.drexel.pearls.BobaCafe;
+import edu.cs.drexel.pearls.entities.NPC;
 
-public class TestScreen extends BaseScreen {
+public class CafeScreen extends BaseScreen {
     SpriteBatch batch;
     Texture image;
     Stage stage;
 
-    public TestScreen(final BobaCafe game) {
+    public CafeScreen(final BobaCafe game) {
         super(game);
         batch = new SpriteBatch();
         stage = new Stage();

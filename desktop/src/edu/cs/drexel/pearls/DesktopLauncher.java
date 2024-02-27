@@ -1,4 +1,4 @@
-package info.vivime.bobacafe;
+package edu.cs.drexel.pearls;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;

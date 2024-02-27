@@ -1,8 +1,7 @@
-package info.vivime.bobacafe.screen;
+package edu.cs.drexel.pearls.screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import info.vivime.bobacafe.BobaCafe;
+import edu.cs.drexel.pearls.BobaCafe;
 
 public class BaseScreen implements Screen {
     BobaCafe game;

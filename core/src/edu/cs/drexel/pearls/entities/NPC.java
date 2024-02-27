@@ -1,4 +1,4 @@
-package info.vivime.bobacafe.entities;
+package edu.cs.drexel.pearls.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;

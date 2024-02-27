@@ -4,8 +4,8 @@ gwt {
     minHeapSize="1G"
 
     src = files(file("src/")) // Needs to be in front of "modules" below.
-    modules 'info.vivime.bobacafe.GdxDefinition'
-    devModules 'info.vivime.bobacafe.GdxDefinitionSuperdev'
+    modules 'edu.cs.drexel.pearls.GdxDefinition'
+    devModules 'edu.cs.drexel.pearls.GdxDefinitionSuperdev'
     project.webAppDirName = 'webapp'
 
     compiler {
