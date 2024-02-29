@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import edu.cs.drexel.pearls.BobaCafe;
 import edu.cs.drexel.pearls.entities.Counter;
 import edu.cs.drexel.pearls.entities.NPC;
+import edu.cs.drexel.pearls.entities.Player;
 
 public class CafeScreen extends BaseScreen {
     SpriteBatch batch;
@@ -26,6 +27,10 @@ public class CafeScreen extends BaseScreen {
         Counter counter = new Counter();
         stage.addActor(counter);
         Gdx.input.setInputProcessor(stage);
+
+        Player player = new Player(new Vector2(320, 380));
+        stage.addActor(player);
+
     }
 
     @Override
