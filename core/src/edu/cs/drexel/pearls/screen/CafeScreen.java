@@ -1,6 +1,8 @@
 package edu.cs.drexel.pearls.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -22,14 +24,33 @@ public class CafeScreen extends BaseScreen {
         stage = new Stage();
 
         image = new Texture("cafeBackground.PNG");
-        NPC npc = new NPC(new Vector2(740, 80));
-        stage.addActor(npc);
         Counter counter = new Counter();
         stage.addActor(counter);
         Gdx.input.setInputProcessor(stage);
 
         Player player = new Player(new Vector2(320, 380));
         stage.addActor(player);
+
+        NPC npc = new NPC(new Vector2(740, 80));
+        stage.addActor(npc);
+
+        Vector2 counterPosition = new Vector2(counter.getX(), counter.getY());
+        counterPosition.y += 100;
+        npc.setPosition(counterPosition);
+
+        // temporary until order interaction is implemented
+        // press e for the npc to leave
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean keyDown(int key) {
+                if (key == Input.Keys.E) {
+                    Vector2 newPosition = new Vector2(750, 80);
+                    npc.setPosition(newPosition);
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 
