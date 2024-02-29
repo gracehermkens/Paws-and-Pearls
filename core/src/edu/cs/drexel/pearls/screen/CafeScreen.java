@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import edu.cs.drexel.pearls.BobaCafe;
+import edu.cs.drexel.pearls.entities.Counter;
 import edu.cs.drexel.pearls.entities.NPC;
 
 public class CafeScreen extends BaseScreen {
@@ -22,6 +23,8 @@ public class CafeScreen extends BaseScreen {
         image = new Texture("cafeBackground.PNG");
         NPC npc = new NPC(new Vector2(740, 80));
         stage.addActor(npc);
+        Counter counter = new Counter();
+        stage.addActor(counter);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -42,4 +45,5 @@ public class CafeScreen extends BaseScreen {
         image.dispose();
         stage.dispose();
     }
+
 }
