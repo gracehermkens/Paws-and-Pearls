@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class Player extends Actor {
     private Texture texture;
 
+
     public Player(Vector2 startPosition) {
         super();
         texture = (new Texture("baseCharacter1.PNG"));
@@ -19,4 +20,10 @@ public class Player extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(this.texture, getX(), getY());
     }
+
+    public void move(float x, float y) {
+        setPosition(getX() + x, getY() + y);
+    }
 }
+
+

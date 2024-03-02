@@ -17,6 +17,8 @@ public class CafeScreen extends BaseScreen {
     SpriteBatch batch;
     Texture image;
     Stage stage;
+    Player player;
+
 
     public CafeScreen(final BobaCafe game) {
         super(game);
@@ -24,11 +26,12 @@ public class CafeScreen extends BaseScreen {
         stage = new Stage();
 
         image = new Texture("cafeBackground.PNG");
+
         Counter counter = new Counter();
         stage.addActor(counter);
         Gdx.input.setInputProcessor(stage);
 
-        Player player = new Player(new Vector2(320, 380));
+        player = new Player(new Vector2(320, 380));
         stage.addActor(player);
 
         NPC npc = new NPC(new Vector2(740, 80));
@@ -51,7 +54,6 @@ public class CafeScreen extends BaseScreen {
                 return false;
             }
         });
-
     }
 
     @Override
@@ -61,8 +63,26 @@ public class CafeScreen extends BaseScreen {
         batch.draw(image, 0, 0);
         batch.end();
 
+        input();
+
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+    }
+
+    private void input() {
+        float speed = 5f;
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+            player.move(0, speed);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            player.move(0, -speed);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            player.move(-speed, 0);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            player.move(speed, 0);
+        }
     }
 
     @Override
