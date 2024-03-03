@@ -2,22 +2,29 @@ package edu.cs.drexel.pearls.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import edu.cs.drexel.pearls.BobaCafe;
 import edu.cs.drexel.pearls.entities.Counter;
+import edu.cs.drexel.pearls.entities.Machine;
 import edu.cs.drexel.pearls.entities.NPC;
 import edu.cs.drexel.pearls.entities.Player;
+import edu.cs.drexel.pearls.interfaces.InterfaceItem;
+import edu.cs.drexel.pearls.interfaces.MachineInterface;
 
 public class CafeScreen extends BaseScreen {
     SpriteBatch batch;
     Texture image;
     Stage stage;
     Player player;
+
+    NPC npc;
+    MachineInterface machineInterface;
 
 
     public CafeScreen(final BobaCafe game) {
@@ -28,32 +35,64 @@ public class CafeScreen extends BaseScreen {
         image = new Texture("cafeBackground.PNG");
 
         Counter counter = new Counter();
-        stage.addActor(counter);
-        Gdx.input.setInputProcessor(stage);
-
+        machineInterface = new MachineInterface();
+        Machine machine = new Machine(400, 450);
         player = new Player(new Vector2(320, 380));
-        stage.addActor(player);
+        npc = new NPC(new Vector2(740, 80));
 
-        NPC npc = new NPC(new Vector2(740, 80));
-        stage.addActor(npc);
+        machine.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                machineInterface.setVisible(true);
+                return true;
+            }
+        });
+
+
+        // fill machine in (temporary debug code)
+
+
+        machineInterface.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                machineInterface.handleTouchDown(x, y);
+                return true;
+            }
+
+            @Override
+            public void touchDragged(InputEvent event, float x, float y, int pointer) {
+
+                // check if clicking something
+                // move it! along (if click not in new box move it back)
+                // otherwise (swap items)
+                machineInterface.handleDrag(x, y);
+
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                machineInterface.handleLift(x, y);
+            }
+        });
+
 
         Vector2 counterPosition = new Vector2(counter.getX(), counter.getY());
         counterPosition.y += 100;
         npc.setPosition(counterPosition);
 
-        // temporary until order interaction is implemented
-        // press e for the npc to leave
-        Gdx.input.setInputProcessor(new InputAdapter() {
-            @Override
-            public boolean keyDown(int key) {
-                if (key == Input.Keys.E) {
-                    Vector2 newPosition = new Vector2(750, 80);
-                    npc.setPosition(newPosition);
-                    return true;
-                }
-                return false;
-            }
-        });
+        // Draw things
+        stage.addActor(counter);
+        stage.addActor(machine);
+        stage.addActor(player);
+        stage.addActor(npc);
+
+
+        // Draw Interfaces Last :)
+        stage.addActor(machineInterface);
+
+
+
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -82,6 +121,17 @@ public class CafeScreen extends BaseScreen {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.move(speed, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            machineInterface.setVisible(false);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            // temporary until order interaction is implemented
+            // press e for the npc to leave
+            Vector2 newPosition = new Vector2(750, 80);
+            npc.setPosition(newPosition);
         }
     }
 
