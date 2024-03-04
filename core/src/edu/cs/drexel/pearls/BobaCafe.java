@@ -8,4 +8,5 @@ public class BobaCafe extends Game {
 	public void create() {
 		setScreen(new TitleScreen(this));
 	}
+
 }

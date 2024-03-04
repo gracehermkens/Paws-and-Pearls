@@ -5,16 +5,22 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Timer;
 
 public class NPC extends Actor {
     private Texture texture;
+    private Texture speechBubble;
+    private Texture dotDotDot;
     private Vector2 position;
     private float speed = 60f;
+    private boolean atCounter;
 
 
     public NPC(Vector2 startPosition) {
         super();
         texture = (new Texture("catCustomer.PNG"));
+        speechBubble = (new Texture("speechBubble.PNG"));
+        dotDotDot = (new Texture("speechBubbleDotDotDot.PNG"));
         setPosition(startPosition.x, startPosition.y);
         position = new Vector2();
     }
@@ -23,6 +29,14 @@ public class NPC extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(this.texture, getX(), getY());
+        float xOffset = 15;
+        float yOffset = 120;
+        if (atCounter) {
+            batch.draw(speechBubble, getX() + xOffset, getY() + yOffset);
+            if (dotDotDot != null) {
+                batch.draw(dotDotDot, getX() + xOffset, getY() + yOffset);
+            }
+        }
     }
 
     public void act(float delta) {
@@ -36,6 +50,12 @@ public class NPC extends Actor {
                     getY() + step * Math.signum(position.y - getY()));
         } else {
             setPosition(position.x, position.y);
+        }
+        if (distance <=1 && !atCounter) {
+            atCounter = true;
+        }
+        else if (distance >1 && atCounter) {
+            atCounter = false;
         }
     }
 
