@@ -19,6 +19,7 @@ public class NPC extends Actor {
     public NPC(Vector2 startPosition) {
         super();
         texture = (new Texture("catCustomer.PNG"));
+        // speech bubble
         speechBubble = (new Texture("speechBubble.PNG"));
         dotDotDot = (new Texture("speechBubbleDotDotDot.PNG"));
         setPosition(startPosition.x, startPosition.y);
