@@ -12,7 +12,7 @@ public class Machine extends Actor {
 
     public Machine(float x, float y) {
         super();
-        texture = (new Texture("machine_placeholder.png"));
+        texture = (new Texture("teaMachine.png"));
         setBounds(x, y, 80, 80);
     }
     @Override
