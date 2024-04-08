@@ -29,7 +29,7 @@ public class MachineInterface extends Actor {
     public MachineInterface() {
         super();
         setVisible(false);
-        texture = (new Texture("machine_interface.png"));
+        texture = (new Texture("machineInterfaceRedesign.png"));
         setBounds(0, 0, 800, 600);
 
         this.inventory = new InterfaceItem[] {
