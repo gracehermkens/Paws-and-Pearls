@@ -131,6 +131,8 @@ public class CafeScreen extends BaseScreen {
                 if (y > npc.getY() && npc.getY() + 160 > y) {
                     machineInterface.output = null;
                     // todo: make npc emote to drink
+                    Vector2 newPosition = new Vector2(750, 80);
+                    npc.setPosition(newPosition);
                 }
             }
 
@@ -152,12 +154,6 @@ public class CafeScreen extends BaseScreen {
             machineInterface.setVisible(false);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            // temporary until order interaction is implemented
-            // press e for the npc to leave
-            Vector2 newPosition = new Vector2(750, 80);
-            npc.setPosition(newPosition);
-        }
     }
 
     @Override
