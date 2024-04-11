@@ -18,7 +18,7 @@ public class MachineInterface extends Actor {
 
     public InterfaceItem[] inventory;
     public static Vector2[] inventoryPositions = {
-            new Vector2(195, 106), new Vector2(285, 106), new Vector2(375, 106), new Vector2(453, 106), new Vector2(540, 104)
+            new Vector2(195, 106), new Vector2(282, 106), new Vector2(370, 106), new Vector2(453, 106), new Vector2(540, 104)
     };
 
     public InterfaceItem output;
