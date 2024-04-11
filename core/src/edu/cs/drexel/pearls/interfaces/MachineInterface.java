@@ -17,7 +17,7 @@ public class MachineInterface extends Actor {
 
     public InterfaceItem[] inventory;
     public static Vector2[] inventoryPositions = {
-            new Vector2(188, 106), new Vector2(276, 106)
+            new Vector2(195, 106), new Vector2(285, 106), new Vector2(375, 106), new Vector2(453, 106), new Vector2(540, 104)
     };
 
     public InterfaceItem output;
@@ -33,8 +33,11 @@ public class MachineInterface extends Actor {
         setBounds(0, 0, 800, 600);
 
         this.inventory = new InterfaceItem[] {
-                new InterfaceItem("Milk", "placeholder_a", inventoryPositions[0]),
-                new InterfaceItem("Sparkle", "placeholder_b", inventoryPositions[1])
+                new InterfaceItem("Thai Tea", "thaiTeaIngredient", inventoryPositions[0]),
+                new InterfaceItem("Taro Tea", "taroBag", inventoryPositions[1]),
+                new InterfaceItem("Melon Tea", "melonBag", inventoryPositions[2]),
+                new InterfaceItem("Boba", "bobaIngredient", inventoryPositions[3]),
+                new InterfaceItem("Mango Popping Boba", "mangoIcon", inventoryPositions[4])
         };
 
         this.inputs = new InterfaceItem[] {
