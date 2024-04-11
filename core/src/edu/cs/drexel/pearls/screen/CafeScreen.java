@@ -2,6 +2,7 @@ package edu.cs.drexel.pearls.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -104,6 +105,10 @@ public class CafeScreen extends BaseScreen {
 
 
         Gdx.input.setInputProcessor(stage);
+
+        // Play music when the game loads
+        playMusic();
+
     }
 
     @Override
@@ -155,6 +160,14 @@ public class CafeScreen extends BaseScreen {
         }
 
     }
+
+    public void playMusic() {
+        Music cafeMusic = Gdx.audio.newMusic(Gdx.files.local("thejazzpiano.ogg"));
+        cafeMusic.play();
+        cafeMusic.setVolume(0.5f);
+        cafeMusic.setLooping(true);
+    }
+
 
     @Override
     public void dispose() {
