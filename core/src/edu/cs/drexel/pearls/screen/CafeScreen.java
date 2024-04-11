@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import edu.cs.drexel.pearls.BobaCafe;
 import edu.cs.drexel.pearls.entities.Counter;
@@ -38,7 +39,17 @@ public class CafeScreen extends BaseScreen {
         machineInterface = new MachineInterface();
         Machine machine = new Machine(355, 490);
         player = new Player(new Vector2(320, 380));
+
+
         npc = new NPC(new Vector2(740, 80));
+
+        npc.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println("hello world");
+                return true;
+            }
+        });
 
         machine.addListener(new InputListener() {
             @Override
@@ -104,12 +115,26 @@ public class CafeScreen extends BaseScreen {
 
         input();
 
+
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
 
     private void input() {
         float speed = 5f;
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            int x = Gdx.input.getX();
+            int y = 600 - Gdx.input.getY();
+
+            // clicking npc
+            if (x > npc.getX() && npc.getX() + 160  > x) {
+                if (y > npc.getY() && npc.getY() + 160 > y) {
+                    machineInterface.output = null;
+                    // todo: make npc emote to drink
+                }
+            }
+
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             player.move(0, speed);
         }

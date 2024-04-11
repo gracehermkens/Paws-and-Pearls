@@ -61,12 +61,6 @@ public class MachineInterface extends Actor {
             }
         }
 
-        if (inputs[0] != null && inputs[1] != null) {
-            output = new InterfaceItem("Boba", "placeholder_c", outputPosition);
-        } else {
-            output = null;
-        }
-
         // draw interface items
         if (output != null) {
             drawWithLogic(batch, output);
@@ -163,6 +157,13 @@ public class MachineInterface extends Actor {
         // if not just drop
         // get pos in list of origin of selected item
         // swap the two
+
+        // boba logic
+        if (inputs[0] != null && inputs[1] != null) {
+            output = new InterfaceItem("Boba", "placeholder_c", outputPosition);
+        } else {
+            output = null;
+        }
     }
 
 
