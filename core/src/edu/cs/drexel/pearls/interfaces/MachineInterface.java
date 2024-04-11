@@ -7,13 +7,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class MachineInterface extends Actor {
     private Texture texture;
+    private Texture cupTexture;
 
     public InterfaceItem[] inputs;
     public static Vector2[] inputPositions = {
             new Vector2(204, 360), new Vector2(204, 278)
     };
 
-    public static Vector2 cupPosition = new Vector2(296, 316);
+    public static Vector2 cupPosition = new Vector2(260, 180);
 
     public InterfaceItem[] inventory;
     public static Vector2[] inventoryPositions = {
@@ -30,6 +31,7 @@ public class MachineInterface extends Actor {
         super();
         setVisible(false);
         texture = (new Texture("machineInterfaceRedesign.png"));
+        cupTexture = (new Texture("machineCup.png"));
         setBounds(0, 0, 800, 600);
 
         this.inventory = new InterfaceItem[] {
@@ -45,6 +47,10 @@ public class MachineInterface extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(this.texture, getX(), getY(), getWidth(), getHeight());
+        if (cupTexture != null) {
+            // image is scaled by 1/3 (og pixels are 210 by 254)
+            batch.draw(this.cupTexture, cupPosition.x, cupPosition.y, 280, 339 );
+        }
 
 
         // Force origin & Draw
