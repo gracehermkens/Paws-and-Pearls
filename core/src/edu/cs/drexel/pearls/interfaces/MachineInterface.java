@@ -1,5 +1,6 @@
 package edu.cs.drexel.pearls.interfaces;
 
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -11,7 +12,7 @@ public class MachineInterface extends Actor {
 
     public InterfaceItem[] inputs;
     public static Vector2[] inputPositions = {
-            new Vector2(204, 360), new Vector2(204, 278)
+            new Vector2(370, 280), new Vector2(370, 200)
     };
 
     public static Vector2 cupPosition = new Vector2(260, 180);
@@ -26,13 +27,13 @@ public class MachineInterface extends Actor {
 
 
 
-
     public MachineInterface() {
         super();
         setVisible(false);
         texture = (new Texture("machineInterfaceRedesign.png"));
         cupTexture = (new Texture("machineCup.png"));
         setBounds(0, 0, 800, 600);
+
 
         this.inventory = new InterfaceItem[] {
                 new InterfaceItem("Thai Tea", "thaiTeaIngredient", inventoryPositions[0]),
@@ -41,6 +42,7 @@ public class MachineInterface extends Actor {
                 new InterfaceItem("Boba", "bobaIngredient", inventoryPositions[3]),
                 new InterfaceItem("Mango Popping Boba", "mangoIcon", inventoryPositions[4])
         };
+
 
         this.inputs = new InterfaceItem[] {
                 null, null
@@ -54,6 +56,8 @@ public class MachineInterface extends Actor {
             // image is scaled by 1/3 (og pixels are 210 by 254)
             batch.draw(this.cupTexture, cupPosition.x, cupPosition.y, 280, 339 );
         }
+
+
 
 
         // Force origin & Draw
@@ -70,11 +74,13 @@ public class MachineInterface extends Actor {
             }
         }
 
+
         // draw interface items
         if (output != null) {
             drawWithLogic(batch, output);
         }
     }
+
 
     public void drawWithLogic(Batch batch, InterfaceItem item) {
         if (!item.selected) {
@@ -85,6 +91,7 @@ public class MachineInterface extends Actor {
         }
         batch.draw(item.texture, item.x, item.y, 64, 64);
     }
+
 
     public void handleTouchDown(float x, float y) {
         for (int i = 0; i < inputPositions.length; i++) {
@@ -103,6 +110,7 @@ public class MachineInterface extends Actor {
         }
     }
 
+
     public void handleDrag(float x, float y) {
         for (int i = 0; i < inputPositions.length; i++) {
             if (inputs[i] != null) {
@@ -115,6 +123,7 @@ public class MachineInterface extends Actor {
             }
         }
     }
+
 
     public void handleLift(float x, float y) {
         int[] landed = listly(x, y);
@@ -140,6 +149,7 @@ public class MachineInterface extends Actor {
             }
         }
 
+
         for (int i = 0; i < inventory.length; i++) {
             if (inventory[i] != null) {
                 if (inventory[i].selected) {
@@ -162,10 +172,12 @@ public class MachineInterface extends Actor {
             }
         }
 
+
         // get pos in list of anywhere (if we're anywhere)
         // if not just drop
         // get pos in list of origin of selected item
         // swap the two
+
 
         // boba logic
         if (inputs[0] != null && inputs[1] != null) {
@@ -176,11 +188,14 @@ public class MachineInterface extends Actor {
     }
 
 
+
+
     public boolean coordinatesInVector(float x, float y, Vector2 vec) {
         float width = 64;
         float height = 64;
         return (x > vec.x) && (x < (vec.x + width)) && (y > vec.y) && (y < (vec.y + height));
     }
+
 
     // im so tired dude
     public int[] listly(float x, float y) {
@@ -189,6 +204,7 @@ public class MachineInterface extends Actor {
                 return new int[]{0, i};
             }
         }
+
 
         for (int i = 0; i < inventoryPositions.length; i++) {
             if (coordinatesInVector(x, y, inventoryPositions[i])) {

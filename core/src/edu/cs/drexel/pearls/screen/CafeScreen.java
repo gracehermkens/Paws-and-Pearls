@@ -132,6 +132,7 @@ public class CafeScreen extends BaseScreen {
             int y = 600 - Gdx.input.getY();
 
             // clicking npc
+            // code written by vish
             if (x > npc.getX() && npc.getX() + 160  > x) {
                 if (y > npc.getY() && npc.getY() + 160 > y) {
                     machineInterface.output = null;
@@ -161,6 +162,7 @@ public class CafeScreen extends BaseScreen {
 
     }
 
+    // written by Brooke
     public void playMusic() {
         Music cafeMusic = Gdx.audio.newMusic(Gdx.files.local("thejazzpiano.ogg"));
         cafeMusic.play();
