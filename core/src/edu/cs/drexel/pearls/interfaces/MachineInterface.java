@@ -89,6 +89,7 @@ public class MachineInterface extends Actor {
             if (showMelonTea) {
                 batch.draw(this.melonTeaTexture, cupPosition.x, cupPosition.y, 280, 339);
             }
+
             // topping layers
             if (showBoba) {
                 batch.draw(this.bobaTexture, cupPosition.x, cupPosition.y, 280, 339);
@@ -97,8 +98,17 @@ public class MachineInterface extends Actor {
                 batch.draw(this.mangoBobaTexture, cupPosition.x, cupPosition.y, 280, 339);
             }
 
-        }
+            // for final drink
+            if (showStraw){
+                // straw has to be drawn first
+                batch.draw(this.strawTexture, cupPosition.x, cupPosition.y, 280, 339);
+            }
+            if (showLid){
+                batch.draw(this.lidTexture, cupPosition.x, cupPosition.y, 280, 339);
+            }
 
+
+        }
 
         // Force origin & Draw
         for (int i = 0; i < inputPositions.length; i++) {
@@ -278,13 +288,18 @@ public class MachineInterface extends Actor {
         // final drink
         if (inputs[0] != null && inputs[1] != null) {
             if (((inputs[0].name.equals("Thai Tea")) || (inputs[0].name.equals("Taro Tea")) || (inputs[0].name.equals("Melon Tea"))) && (inputs[1].name.equals("Boba") || (inputs[1].name.equals("Mango Boba")))) {
-
+                showLid = true;
+                showStraw = true;
             }
             else if (((inputs[1].name.equals("Thai Tea")) || (inputs[1].name.equals("Taro Tea")) || (inputs[1].name.equals("Melon Tea"))) && (inputs[0].name.equals("Boba") || (inputs[0].name.equals("Mango Boba")))){
-
+                showLid = true;
+                showStraw = true;
             }
-
             }
+        else {
+            showLid = false;
+            showStraw = false;
+        }
         }
 
 
