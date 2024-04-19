@@ -10,10 +10,17 @@ public class MachineInterface extends Actor {
     private Texture texture;
     private Texture cupTexture;
     private Texture thaiTeaTexture, melonTeaTexture, taroTeaTexture;
+    private Texture bobaTexture, mangoBobaTexture;
+    private Texture strawTexture, lidTexture;
 
     private boolean showThaiTea = false;
     private boolean showMelonTea = false;
     private boolean showTaroTea = false;
+    private boolean showBoba = false;
+    private boolean showMangoBoba = false;
+
+    private boolean showStraw = false;
+    private boolean showLid = false;
 
     public InterfaceItem[] inputs;
     public static Vector2[] inputPositions = {
@@ -28,20 +35,25 @@ public class MachineInterface extends Actor {
     };
 
     public InterfaceItem output;
-    public static Vector2 outputPosition = new Vector2(498, 320);
-
 
     public MachineInterface() {
         super();
         setVisible(false);
         texture = (new Texture("machineInterfaceRedesign.png"));
+
+        // cup layers
         cupTexture = (new Texture("machineCup.png"));
+        strawTexture = (new Texture ("machineCupStraw.png"));
+        lidTexture = (new Texture ("machineCupLid.png"));
 
         // tea layers
         thaiTeaTexture = (new Texture("ThaiTea.png"));
         melonTeaTexture = (new Texture("melonTea.png"));
         taroTeaTexture = (new Texture("taroTea.png"));
 
+        // topping layers
+        bobaTexture = (new Texture("boba.png"));
+        mangoBobaTexture = (new Texture("mangoBoba.png"));
         setBounds(0, 0, 800, 600);
 
 
@@ -66,14 +78,23 @@ public class MachineInterface extends Actor {
         if (cupTexture != null) {
             // image is scaled by 1/3 (og pixels are 210 by 254)
             batch.draw(this.cupTexture, cupPosition.x, cupPosition.y, 280, 339);
+
+            // tea layers
             if (showThaiTea) {
                 batch.draw(this.thaiTeaTexture, cupPosition.x, cupPosition.y, 280, 339);
             }
-            if (showTaroTea){
+            if (showTaroTea) {
                 batch.draw(this.taroTeaTexture, cupPosition.x, cupPosition.y, 280, 339);
             }
             if (showMelonTea) {
                 batch.draw(this.melonTeaTexture, cupPosition.x, cupPosition.y, 280, 339);
+            }
+            // topping layers
+            if (showBoba) {
+                batch.draw(this.bobaTexture, cupPosition.x, cupPosition.y, 280, 339);
+            }
+            if (showMangoBoba) {
+                batch.draw(this.mangoBobaTexture, cupPosition.x, cupPosition.y, 280, 339);
             }
 
         }
@@ -95,10 +116,12 @@ public class MachineInterface extends Actor {
 
 
         // draw interface items
+
         if (output != null) {
             drawWithLogic(batch, output);
         }
     }
+
 
 
     public void drawWithLogic(Batch batch, InterfaceItem item) {
@@ -136,6 +159,7 @@ public class MachineInterface extends Actor {
                 inputs[i].dragIfSelected(x, y);
             }
         }
+
         for (int i = 0; i < inventoryPositions.length; i++) {
             if (inventory[i] != null) {
                 inventory[i].dragIfSelected(x, y);
@@ -146,6 +170,16 @@ public class MachineInterface extends Actor {
 
     public void handleLift(float x, float y) {
         int[] landed = listly(x, y);
+        boolean hasTea = false;
+
+        // to check if input already has a tea bag
+        for (InterfaceItem input : inputs) {
+            if (input != null && (input.name.equals("Thai Tea") || input.name.equals("Taro Tea") || input.name.equals("Melon Tea"))) {
+                hasTea = true;
+                break;
+            }
+        }
+
         for (int i = 0; i < inputs.length; i++) {
             if (inputs[i] != null) {
                 if (inputs[i].selected) {
@@ -181,61 +215,88 @@ public class MachineInterface extends Actor {
                             inputs[landed[1]] = inventory[i]; // set where we landed as original
                             inventory[i] = indigenous; // set original as where we land
                             break;
+
                         case 1: // inv
-                            indigenous = inventory[landed[1]];
-                            inventory[landed[1]] = inventory[i];
-                            inventory[i] = indigenous;
-                            break;
+                            if (!hasTea) {
+                                indigenous = inventory[landed[1]];
+                                inventory[landed[1]] = inventory[i];
+                                inventory[i] = indigenous;
+                                break;
+                            }
                     }
                 }
             }
         }
-
-
-        // get pos in list of anywhere (if we're anywhere)
-        // if not just drop
-        // get pos in list of origin of selected item
-        // swap the two
-
-
-        // boba logic
-        if (inputs[0] != null && inputs[1] != null) {
-            output = new InterfaceItem("Boba", "placeholder_c", outputPosition);
-            // checking tea inputs for corresponding tea layers
-            if ((inputs[0].name.equals("Thai Tea")) || inputs[1].name.equals("Thai Tea")) {
-                showThaiTea = true;
-            } else {
-                showThaiTea = false;
-            }
-            if ((inputs[0].name.equals("Taro Tea")) || inputs[1].name.equals("Taro Tea")) {
-                showTaroTea = true;
-            } else {
-                showTaroTea = false;
-            }
-            if ((inputs[0].name.equals("Melon Tea")) || inputs[1].name.equals("Melon Tea")) {
-                showMelonTea = true;
-            } else {
-                showMelonTea = false;
-            }
-        }
-        else {
-            output = null;
-            showThaiTea = false;
-            showMelonTea = false;
-            showTaroTea = false;
-        }
+        updateTeaLayers();
+        updateToppingLayers();
     }
 
 
-    public boolean coordinatesInVector( float x, float y, Vector2 vec){
+    // get pos in list of anywhere (if we're anywhere)
+    // if not just drop
+    // get pos in list of origin of selected item
+    // swap the two
+    private void updateTeaLayers() {
+        showThaiTea = false;
+        showTaroTea = false;
+        showMelonTea = false;
+        for (InterfaceItem input : inputs) {
+            if (input != null) {
+                switch (input.name) {
+                    case "Thai Tea":
+                        showThaiTea = true;
+                        break;
+                    case "Taro Tea":
+                        showTaroTea = true;
+                        break;
+                    case "Melon Tea":
+                        showMelonTea = true;
+                        break;
+                }
+            }
+        }
+    }
+
+    private void updateToppingLayers() {
+        showBoba = false;
+        showMangoBoba = false;
+        for (InterfaceItem input : inputs) {
+            if (input != null) {
+                switch (input.name) {
+                    case "Boba":
+                        showBoba = true;
+                        break;
+                    case "Mango Popping Boba":
+                        showMangoBoba = true;
+                        break;
+                }
+
+            }
+        }
+
+
+        // final drink
+        if (inputs[0] != null && inputs[1] != null) {
+            if (((inputs[0].name.equals("Thai Tea")) || (inputs[0].name.equals("Taro Tea")) || (inputs[0].name.equals("Melon Tea"))) && (inputs[1].name.equals("Boba") || (inputs[1].name.equals("Mango Boba")))) {
+
+            }
+            else if (((inputs[1].name.equals("Thai Tea")) || (inputs[1].name.equals("Taro Tea")) || (inputs[1].name.equals("Melon Tea"))) && (inputs[0].name.equals("Boba") || (inputs[0].name.equals("Mango Boba")))){
+
+            }
+
+            }
+        }
+
+
+    public boolean coordinatesInVector(float x, float y, Vector2 vec) {
         float width = 64;
         float height = 64;
         return (x > vec.x) && (x < (vec.x + width)) && (y > vec.y) && (y < (vec.y + height));
     }
 
 
-    // im so tired dude
-    public int[] listly ( float x, float y){
+
+    public int[] listly(float x, float y) {
         for (int i = 0; i < inputPositions.length; i++) {
             if (coordinatesInVector(x, y, inputPositions[i])) {
                 return new int[]{0, i};
@@ -251,4 +312,5 @@ public class MachineInterface extends Actor {
         return new int[]{-1, -1};
     }
 }
+
 
