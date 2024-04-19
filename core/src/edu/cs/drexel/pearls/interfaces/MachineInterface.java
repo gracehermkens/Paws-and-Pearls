@@ -9,6 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class MachineInterface extends Actor {
     private Texture texture;
     private Texture cupTexture;
+    private Texture thaiTeaTexture, melonTeaTexture, taroTeaTexture;
+
+    private boolean showThaiTea = false;
+    private boolean showMelonTea = false;
+    private boolean showTaroTea = false;
 
     public InterfaceItem[] inputs;
     public static Vector2[] inputPositions = {
@@ -26,17 +31,22 @@ public class MachineInterface extends Actor {
     public static Vector2 outputPosition = new Vector2(498, 320);
 
 
-
     public MachineInterface() {
         super();
         setVisible(false);
         texture = (new Texture("machineInterfaceRedesign.png"));
         cupTexture = (new Texture("machineCup.png"));
+
+        // tea layers
+        thaiTeaTexture = (new Texture("ThaiTea.png"));
+        melonTeaTexture = (new Texture("melonTea.png"));
+        taroTeaTexture = (new Texture("taroTea.png"));
+
         setBounds(0, 0, 800, 600);
 
 
-        this.inventory = new InterfaceItem[] {
-                new InterfaceItem("Thai Tea", "thaiTeaIngredient", inventoryPositions[0]),
+        this.inventory = new InterfaceItem[]{
+                new InterfaceItem("Thai Tea", "thaiTeaBag", inventoryPositions[0]),
                 new InterfaceItem("Taro Tea", "taroBag", inventoryPositions[1]),
                 new InterfaceItem("Melon Tea", "melonBag", inventoryPositions[2]),
                 new InterfaceItem("Boba", "bobaIngredient", inventoryPositions[3]),
@@ -44,20 +54,29 @@ public class MachineInterface extends Actor {
         };
 
 
-        this.inputs = new InterfaceItem[] {
+        this.inputs = new InterfaceItem[]{
                 null, null
         };
         this.output = null;
     }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(this.texture, getX(), getY(), getWidth(), getHeight());
         if (cupTexture != null) {
             // image is scaled by 1/3 (og pixels are 210 by 254)
-            batch.draw(this.cupTexture, cupPosition.x, cupPosition.y, 280, 339 );
+            batch.draw(this.cupTexture, cupPosition.x, cupPosition.y, 280, 339);
+            if (showThaiTea) {
+                batch.draw(this.thaiTeaTexture, cupPosition.x, cupPosition.y, 280, 339);
+            }
+            if (showTaroTea){
+                batch.draw(this.taroTeaTexture, cupPosition.x, cupPosition.y, 280, 339);
+            }
+            if (showMelonTea) {
+                batch.draw(this.melonTeaTexture, cupPosition.x, cupPosition.y, 280, 339);
+            }
+
         }
-
-
 
 
         // Force origin & Draw
@@ -182,15 +201,33 @@ public class MachineInterface extends Actor {
         // boba logic
         if (inputs[0] != null && inputs[1] != null) {
             output = new InterfaceItem("Boba", "placeholder_c", outputPosition);
-        } else {
+            // checking tea inputs for corresponding tea layers
+            if ((inputs[0].name.equals("Thai Tea")) || inputs[1].name.equals("Thai Tea")) {
+                showThaiTea = true;
+            } else {
+                showThaiTea = false;
+            }
+            if ((inputs[0].name.equals("Taro Tea")) || inputs[1].name.equals("Taro Tea")) {
+                showTaroTea = true;
+            } else {
+                showTaroTea = false;
+            }
+            if ((inputs[0].name.equals("Melon Tea")) || inputs[1].name.equals("Melon Tea")) {
+                showMelonTea = true;
+            } else {
+                showMelonTea = false;
+            }
+        }
+        else {
             output = null;
+            showThaiTea = false;
+            showMelonTea = false;
+            showTaroTea = false;
         }
     }
 
 
-
-
-    public boolean coordinatesInVector(float x, float y, Vector2 vec) {
+    public boolean coordinatesInVector( float x, float y, Vector2 vec){
         float width = 64;
         float height = 64;
         return (x > vec.x) && (x < (vec.x + width)) && (y > vec.y) && (y < (vec.y + height));
@@ -198,7 +235,7 @@ public class MachineInterface extends Actor {
 
 
     // im so tired dude
-    public int[] listly(float x, float y) {
+    public int[] listly ( float x, float y){
         for (int i = 0; i < inputPositions.length; i++) {
             if (coordinatesInVector(x, y, inputPositions[i])) {
                 return new int[]{0, i};
@@ -214,3 +251,4 @@ public class MachineInterface extends Actor {
         return new int[]{-1, -1};
     }
 }
+
