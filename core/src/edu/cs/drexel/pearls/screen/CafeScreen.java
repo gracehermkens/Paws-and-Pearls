@@ -44,13 +44,7 @@ public class CafeScreen extends BaseScreen {
 
         npc = new NPC(new Vector2(740, 80));
 
-        npc.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("hello world");
-                return true;
-            }
-        });
+
 
         machine.addListener(new InputListener() {
             @Override
@@ -135,8 +129,11 @@ public class CafeScreen extends BaseScreen {
             // code written by vish
             if (x > npc.getX() && npc.getX() + 160  > x) {
                 if (y > npc.getY() && npc.getY() + 160 > y) {
+                    if (npc.atCounter) {
+                        npc.heart = true;
+                    }
                     machineInterface.output = null;
-                    // todo: make npc emote to drink
+
                     Vector2 newPosition = new Vector2(750, 80);
                     npc.setPosition(newPosition);
                 }

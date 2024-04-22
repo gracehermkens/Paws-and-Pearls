@@ -10,10 +10,12 @@ import com.badlogic.gdx.utils.Timer;
 public class NPC extends Actor {
     private Texture texture;
     private Texture speechBubble;
-    private Texture dotDotDot;
+    public Texture dotDotDot;
+    public Texture spHeart;
     private Vector2 position;
     private float speed = 60f;
-    private boolean atCounter;
+    public boolean atCounter;
+    public boolean heart;
 
 
     public NPC(Vector2 startPosition) {
@@ -21,6 +23,7 @@ public class NPC extends Actor {
         texture = (new Texture("catCustomer.PNG"));
         speechBubble = (new Texture("speechBubble.PNG"));
         dotDotDot = (new Texture("speechBubbleDotDotDot.PNG"));
+        spHeart = (new Texture("speechBubbleHeart.PNG"));
         setPosition(startPosition.x, startPosition.y);
         position = new Vector2();
     }
@@ -35,6 +38,12 @@ public class NPC extends Actor {
             batch.draw(speechBubble, getX() + xOffset, getY() + yOffset);
             if (dotDotDot != null) {
                 batch.draw(dotDotDot, getX() + xOffset, getY() + yOffset);
+            }
+        } if (heart) {
+            batch.draw(speechBubble, getX() + xOffset, getY() + yOffset);
+            if (spHeart != null) {
+
+                batch.draw(spHeart , getX() + xOffset, getY() + yOffset);
             }
         }
     }
