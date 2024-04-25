@@ -129,13 +129,15 @@ public class CafeScreen extends BaseScreen {
             // code written by vish
             if (x > npc.getX() && npc.getX() + 160  > x) {
                 if (y > npc.getY() && npc.getY() + 160 > y) {
-                    if (npc.atCounter) {
-                        npc.heart = true;
-                    }
-                    machineInterface.output = null;
+                    if (!machineInterface.isVisible()) {
+                        if (npc.atCounter) {
+                            npc.heart = true;
+                        }
+                        machineInterface.output = null;
 
-                    Vector2 newPosition = new Vector2(750, 80);
-                    npc.setPosition(newPosition);
+                        Vector2 newPosition = new Vector2(750, 80);
+                        npc.setPosition(newPosition);
+                    }
                 }
             }
 
