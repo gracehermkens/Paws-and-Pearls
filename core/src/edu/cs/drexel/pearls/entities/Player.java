@@ -22,7 +22,24 @@ public class Player extends Actor {
     }
 
     public void move(float x, float y) {
-        setPosition(getX() + x, getY() + y);
+        float newX = getX() + x;
+        float newY = getY() + y;
+        // collision code by vish!
+
+        if (!( // bound to table
+                newX > 70 && newX < 565 &&
+                newY > 235 && newY < 400 &&
+                !(
+                    newX > 205 && newX < 430 &&
+                    newY > 365 && newY < 400
+                )
+        ) && ( // bound to room
+            newX >= -35 && newX <= 675 &&
+            newY >= 0 && newY <= 405
+        )) {
+            // good to go
+            setPosition(newX, newY);
+        }
     }
 }
 
