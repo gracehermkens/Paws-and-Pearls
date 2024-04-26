@@ -1,5 +1,7 @@
 package edu.cs.drexel.pearls.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -49,6 +51,13 @@ public class NPC extends Actor {
     }
 
 
+
+    public void jingle() {
+        // written by vish
+        Music bell = Gdx.audio.newMusic(Gdx.files.local("bell.ogg"));
+        bell.play();
+        bell.setVolume(1.0f);
+    }
 
     public void act(float delta) {
         super.act(delta);

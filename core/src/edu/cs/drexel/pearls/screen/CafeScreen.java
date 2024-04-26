@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 import edu.cs.drexel.pearls.BobaCafe;
 import edu.cs.drexel.pearls.entities.Counter;
 import edu.cs.drexel.pearls.entities.Machine;
@@ -84,7 +85,9 @@ public class CafeScreen extends BaseScreen {
 
         Vector2 counterPosition = new Vector2(counter.getX(), counter.getY());
         counterPosition.y += 100;
+
         npc.setPosition(counterPosition);
+        npc.jingle();
 
         // Draw things
         stage.addActor(counter);
@@ -137,6 +140,13 @@ public class CafeScreen extends BaseScreen {
 
                         Vector2 newPosition = new Vector2(750, 80);
                         npc.setPosition(newPosition);
+                        Timer.schedule(new Timer.Task(){
+                            @Override
+                            public void run() {
+                                npc.setPosition(new Vector2(0,  100));
+                                npc.jingle();
+                            }
+                        }, (int)Math.floor(Math.random() * (12 - 8 + 1) + 8));
                     }
                 }
             }
