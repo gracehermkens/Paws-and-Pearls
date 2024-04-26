@@ -1,6 +1,4 @@
 package edu.cs.drexel.pearls.interfaces;
-
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
@@ -18,12 +16,13 @@ public class MachineInterface extends Actor {
     private boolean showTaroTea = false;
     private boolean showBoba = false;
     private boolean showMangoBoba = false;
-    private boolean hasTea = false;
-    private boolean hasTopping = false;
+
 
     private boolean showStraw = false;
     private boolean showLid = false;
     private boolean inputsLocked = false;
+    private boolean hasTea = false;
+    private boolean hasTopping = false;
 
     public InterfaceItem[] inputs;
     public static Vector2[] inputPositions = {
@@ -59,7 +58,6 @@ public class MachineInterface extends Actor {
         mangoBobaTexture = (new Texture("mangoBoba.png"));
         setBounds(0, 0, 800, 600);
 
-
         this.inventory = new InterfaceItem[]{
                 new InterfaceItem("Thai Tea", "thaiTeaBag", inventoryPositions[0]),
                 new InterfaceItem("Taro Tea", "taroBag", inventoryPositions[1]),
@@ -67,7 +65,6 @@ public class MachineInterface extends Actor {
                 new InterfaceItem("Boba", "bobaIngredient", inventoryPositions[3]),
                 new InterfaceItem("Mango Popping Boba", "mangoIcon", inventoryPositions[4])
         };
-
 
         this.inputs = new InterfaceItem[]{
                 null, null
@@ -134,7 +131,6 @@ public class MachineInterface extends Actor {
         }
     }
 
-
     public void drawWithLogic(Batch batch, InterfaceItem item) {
         if (!item.selected) {
             item.diffX = 0;
@@ -185,68 +181,73 @@ public class MachineInterface extends Actor {
         int[] landed = listly(x, y);
         hasTea = false;
         hasTopping = false;
-            // to check if input already has a tea bag and topping
-            for (InterfaceItem input : inputs) {
-                if (input != null) {
-                    if (input.name.equals("Thai Tea") || input.name.equals("Taro Tea") || input.name.equals("Melon Tea")) {
-                        hasTea = true;
-                    } else if (input.name.equals("Boba") || input.name.equals("Mango Popping Boba")) {
-                        hasTopping = true;
-                    }
+        // to check if input already has a tea bag and topping
+        for (InterfaceItem input : inputs) {
+            if (input != null) {
+                if (input.name.equals("Thai Tea") || input.name.equals("Taro Tea") || input.name.equals("Melon Tea")) {
+                    hasTea = true;
+                } else if (input.name.equals("Boba") || input.name.equals("Mango Popping Boba")) {
+                    hasTopping = true;
                 }
             }
-            // will only let u lift if input isn't locked
-            if (!inputsLocked) {
-                for (int i = 0; i < inputs.length; i++) {
-                    if (inputs[i] != null) {
-                        if (inputs[i].selected) {
-                            // inputs, i @
-                            InterfaceItem indigenous;
-                            inputs[i].deselect();
-                            switch (landed[0]) {
-                                case 0: // inputs
-                                    indigenous = inputs[landed[1]]; // store where we landed
-                                    inputs[landed[1]] = inputs[i]; // set where we landed as original
-                                    inputs[i] = indigenous; // set original as where we landed
-                                    break;
-                                case 1: // inv
-                                    indigenous = inventory[landed[1]]; // store where we landed
-                                    inventory[landed[1]] = inputs[i]; //
-                                    inputs[i] = indigenous;
-                                    break;
-                            }
+        }
+        // will only let u lift if input isn't locked
+        if (!inputsLocked) {
+            for (int i = 0; i < inputs.length; i++) {
+                if (inputs[i] != null) {
+                    if (inputs[i].selected) {
+                        // inputs, i @
+                        InterfaceItem indigenous;
+                        inputs[i].deselect();
+                        switch (landed[0]) {
+                            case 0: // inputs
+                                indigenous = inputs[landed[1]]; // store where we landed
+                                inputs[landed[1]] = inputs[i]; // set where we landed as original
+                                inputs[i] = indigenous; // set original as where we landed
+                                break;
+                            case 1: // inv
+                                indigenous = inventory[landed[1]]; // store where we landed
+                                inventory[landed[1]] = inputs[i]; //
+                                inputs[i] = indigenous;
+                                break;
                         }
                     }
                 }
+            }
 
-                for (int i = 0; i < inventory.length; i++) {
-                    if (inventory[i] != null) {
-                        if (inventory[i].selected) {
-                            // inventory, i @
-                            InterfaceItem indigenous;
-                            inventory[i].deselect();
-                            switch (landed[0]) {
-                                case 0: // inputs
+            for (int i = 0; i < inventory.length; i++) {
+                if (inventory[i] != null) {
+                    if (inventory[i].selected) {
+                        // inventory, i @
+                        InterfaceItem indigenous;
+                        inventory[i].deselect();
+                        switch (landed[0]) {
+                            case 0: // inputs
+                                if (!hasTea && (inventory[i].name.equals("Thai Tea") || inventory[i].name.equals("Taro Tea") || inventory[i].name.equals("Melon Tea"))) {
                                     indigenous = inputs[landed[1]]; // store where we landed
                                     inputs[landed[1]] = inventory[i]; // set where we landed as original
                                     inventory[i] = indigenous; // set original as where we land
+                                } else if (!hasTopping && (inventory[i].name.equals("Boba") || inventory[i].name.equals("Mango Popping Boba"))){
+                                    indigenous = inputs[landed[1]]; // store where we landed
+                                    inputs[landed[1]] = inventory[i]; // set where we landed as original
+                                    inventory[i] = indigenous; // set original as where we land
+                                }
+                                break;
+                            case 1: // inv
+                                if (!hasTea) {
+                                    indigenous = inventory[landed[1]];
+                                    inventory[landed[1]] = inventory[i];
+                                    inventory[i] = indigenous;
                                     break;
-
-                                case 1: // inv
-                                    if (!hasTea) {
-                                        indigenous = inventory[landed[1]];
-                                        inventory[landed[1]] = inventory[i];
-                                        inventory[i] = indigenous;
-                                        break;
-                                    }
-                            }
+                                }
                         }
                     }
                 }
-                updateTeaLayers();
-                updateToppingLayers();
             }
+            updateTeaLayers();
+            updateToppingLayers();
         }
+    }
 
     // get pos in list of anywhere (if we're anywhere)
     // if not just drop
@@ -321,13 +322,11 @@ public class MachineInterface extends Actor {
         }
     }
 
-
     public boolean coordinatesInVector(float x, float y, Vector2 vec) {
         float width = 64;
         float height = 64;
         return (x > vec.x) && (x < (vec.x + width)) && (y > vec.y) && (y < (vec.y + height));
     }
-
 
 
     public int[] listly(float x, float y) {
@@ -337,7 +336,6 @@ public class MachineInterface extends Actor {
             }
         }
 
-
         for (int i = 0; i < inventoryPositions.length; i++) {
             if (coordinatesInVector(x, y, inventoryPositions[i])) {
                 return new int[]{1, i};
@@ -346,5 +344,3 @@ public class MachineInterface extends Actor {
         return new int[]{-1, -1};
     }
 }
-
-
