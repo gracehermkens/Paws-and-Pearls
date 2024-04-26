@@ -15,9 +15,6 @@ public class InterfaceItem {
     public Vector2 origin;
     public boolean selected = false;
 
-
-
-
     public InterfaceItem(String name, String id, Vector2 position) {
         this.name = name;
         this.texture = new Texture(id+".png");;
