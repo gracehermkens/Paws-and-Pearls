@@ -165,6 +165,7 @@ public class MachineInterface extends Actor {
     }
 
     public void handleDrag(float x, float y) {
+        // will only let u drag if input isn't locked
         if (!inputsLocked) {
             for (int i = 0; i < inputPositions.length; i++) {
                 if (inputs[i] != null) {
@@ -194,7 +195,7 @@ public class MachineInterface extends Actor {
                     }
                 }
             }
-
+            // will only let u lift if input isn't locked
             if (!inputsLocked) {
                 for (int i = 0; i < inputs.length; i++) {
                     if (inputs[i] != null) {
