@@ -4,12 +4,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import java.util.Arrays;
+
 public class MachineInterface extends Actor {
     private Texture texture;
     private Texture cupTexture;
     private Texture thaiTeaTexture, melonTeaTexture, taroTeaTexture;
     private Texture bobaTexture, mangoBobaTexture;
     private Texture strawTexture, lidTexture;
+
+    private final Vector2 resetButtonPosition = new Vector2(500, 450);
 
     private boolean showThaiTea = false;
     private boolean showMelonTea = false;
@@ -32,6 +36,7 @@ public class MachineInterface extends Actor {
     public static Vector2 cupPosition = new Vector2(260, 180);
 
     public InterfaceItem[] inventory;
+
     public static Vector2[] inventoryPositions = {
             new Vector2(195, 106), new Vector2(282, 106), new Vector2(370, 106), new Vector2(453, 106), new Vector2(540, 104)
     };
@@ -107,7 +112,6 @@ public class MachineInterface extends Actor {
                 batch.draw(this.lidTexture, cupPosition.x, cupPosition.y, 280, 339);
             }
 
-
         }
 
         // Force origin & Draw
@@ -141,24 +145,29 @@ public class MachineInterface extends Actor {
         batch.draw(item.texture, item.x, item.y, 64, 64);
     }
 
+    // written by vish : modified by brooke (added first 2 lines)
     public void handleTouchDown(float x, float y) {
-        if (!inputsLocked) {
-            for (int i = 0; i < inputPositions.length; i++) {
-                if (coordinatesInVector(x, y, inputPositions[i])) {
-                    if (inputs[i] != null) {
-                        inputs[i].select(x, y);
-                    }
-                }
-            }
-            for (int i = 0; i < inventoryPositions.length; i++) {
-                if (coordinatesInVector(x, y, inventoryPositions[i])) {
-                    if (inventory[i] != null) {
-                        inventory[i].select(x, y);
-                    }
-                }
-            }
+        if (coordinatesInResetButton(x,y)) {
+            resetInterface();
         }
-    }
+            if (!inputsLocked) {
+                for (int i = 0; i < inputPositions.length; i++) {
+                 if (coordinatesInVector(x, y, inputPositions[i])) {
+                        if (inputs[i] != null) {
+                         inputs[i].select(x, y);
+                     }
+                 }
+             }
+             for (int i = 0; i < inventoryPositions.length; i++) {
+                 if (coordinatesInVector(x, y, inventoryPositions[i])) {
+                     if (inventory[i] != null) {
+                        inventory[i].select(x, y);
+                     }
+                 }
+             }
+          }
+
+      }
 
     public void handleDrag(float x, float y) {
         // will only let u drag if input isn't locked
@@ -343,4 +352,46 @@ public class MachineInterface extends Actor {
         }
         return new int[]{-1, -1};
     }
+
+    // gets coordinates of reset "button" on interface picture
+    // written by brooke
+    private boolean coordinatesInResetButton(float x, float y) {
+        float buttonWidth = 100;
+        float buttonHeight = 50;
+        return x >= resetButtonPosition.x && x <= resetButtonPosition.x + buttonWidth &&
+                y >= resetButtonPosition.y && y <= resetButtonPosition.y + buttonHeight;
+    }
+
+
+    // resetting position of teas and toppings
+    // written by brooke
+    private void resetInterface() {
+        showThaiTea = false;
+        showMelonTea = false;
+        showTaroTea = false;
+        showBoba = false;
+        showMangoBoba = false;
+        showStraw = false;
+        showLid = false;
+        inputsLocked = false;
+        hasTea = false;
+        hasTopping = false;
+
+        for (int i = 0; i < inputs.length; i++) {
+            InterfaceItem inputItem = inputs[i];
+            if (inputItem != null) {
+                for (int j = 0; j < inventory.length; j++) {
+                    if (inventory[j] == null) {
+                        inventory[j] = inputItem;
+                        inputs[i] = null;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // clearing input slots
+        Arrays.fill(inputs, null);
+    }
+
 }
