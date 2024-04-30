@@ -313,12 +313,12 @@ public class MachineInterface extends Actor {
         // written by Grace
         // final drink
         if (inputs[0] != null && inputs[1] != null) {
-            if (((inputs[0].name.equals("Thai Tea")) || (inputs[0].name.equals("Taro Tea")) || (inputs[0].name.equals("Melon Tea"))) && (inputs[1].name.equals("Boba") || (inputs[1].name.equals("Mango Boba")))) {
+            if (((inputs[0].name.equals("Thai Tea")) || (inputs[0].name.equals("Taro Tea")) || (inputs[0].name.equals("Melon Tea"))) && (inputs[1].name.equals("Boba") || (inputs[1].name.equals("Mango Popping Boba")))) {
                 showLid = true;
                 showStraw = true;
                 inputsLocked = true;
             }
-            else if (((inputs[1].name.equals("Thai Tea")) || (inputs[1].name.equals("Taro Tea")) || (inputs[1].name.equals("Melon Tea"))) && (inputs[0].name.equals("Boba") || (inputs[0].name.equals("Mango Boba")))){
+            else if (((inputs[1].name.equals("Thai Tea")) || (inputs[1].name.equals("Taro Tea")) || (inputs[1].name.equals("Melon Tea"))) && (inputs[0].name.equals("Boba") || (inputs[0].name.equals("Mango Popping Boba")))){
                 showLid = true;
                 showStraw = true;
                 inputsLocked = true;
