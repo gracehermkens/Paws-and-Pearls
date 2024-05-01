@@ -22,6 +22,7 @@ import edu.cs.drexel.pearls.interfaces.MachineInterface;
 
 public class CafeScreen extends BaseScreen {
     SpriteBatch batch;
+    Counter counter;
     Texture image;
     Stage stage;
     Player player;
@@ -37,7 +38,8 @@ public class CafeScreen extends BaseScreen {
 
         image = new Texture("cafeBackground.PNG");
 
-        Counter counter = new Counter();
+
+        counter = new Counter();
         machineInterface = new MachineInterface();
         Machine machine = new Machine(355, 490);
         player = new Player(new Vector2(320, 380));
@@ -100,8 +102,6 @@ public class CafeScreen extends BaseScreen {
         // Draw Interfaces Last :)
         stage.addActor(machineInterface);
 
-
-
         Gdx.input.setInputProcessor(stage);
 
         // Play music when the game loads
@@ -114,11 +114,12 @@ public class CafeScreen extends BaseScreen {
         ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1);
         batch.begin();
         batch.draw(image, 0, 0);
+
         batch.end();
 
         input();
 
-
+        counter.setBobaStatus(machineInterface.showStraw);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
     }
@@ -137,7 +138,10 @@ public class CafeScreen extends BaseScreen {
                         if (npc.atCounter) {
                             npc.heart = true;
                         }
-                        machineInterface.output = null;
+
+                        // by vish
+                        // reset machine
+                        machineInterface.resetInterface();
 
                         Vector2 newPosition = new Vector2(750, 80);
                         npc.setPosition(newPosition);

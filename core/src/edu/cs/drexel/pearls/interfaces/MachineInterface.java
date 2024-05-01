@@ -22,7 +22,7 @@ public class MachineInterface extends Actor {
     private boolean showMangoBoba = false;
 
 
-    private boolean showStraw = false;
+    public boolean showStraw = false;
     private boolean showLid = false;
     private boolean inputsLocked = false;
     private boolean hasTea = false;
@@ -41,6 +41,7 @@ public class MachineInterface extends Actor {
             new Vector2(195, 106), new Vector2(282, 106), new Vector2(370, 106), new Vector2(453, 106), new Vector2(540, 104)
     };
 
+    // deprecated
     public InterfaceItem output;
 
     public MachineInterface() {
@@ -185,6 +186,7 @@ public class MachineInterface extends Actor {
             }
         }
     }
+
 
     public void handleLift(float x, float y) {
         int[] landed = listly(x, y);
@@ -365,7 +367,7 @@ public class MachineInterface extends Actor {
 
     // resetting position of teas and toppings
     // written by brooke
-    private void resetInterface() {
+    public void resetInterface() {
         showThaiTea = false;
         showMelonTea = false;
         showTaroTea = false;
