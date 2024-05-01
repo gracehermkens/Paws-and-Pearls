@@ -145,9 +145,13 @@ public class CafeScreen extends BaseScreen {
                             @Override
                             public void run() {
                                 npc.setPosition(new Vector2(0,  100));
-                                npc.jingle();
+                                npc.jingle();;
                             }
-                        }, (int)Math.floor(Math.random() * (12 - 8 + 1) + 8));
+                        },
+                                (int) Math.floor(
+                                        Math.random() * ((
+                                            (12 - 8) - (npc.getX()/100)) + 1)
+                                        + 8));
                     }
                 }
             }
