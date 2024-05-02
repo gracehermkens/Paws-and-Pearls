@@ -147,6 +147,7 @@ public class CafeScreen extends BaseScreen {
                             @Override
                             public void run() {
                                 npc.setPosition(new Vector2(0,  100));
+                                npc.heart = false;
                                 npc.jingle();
                             }
                         },
