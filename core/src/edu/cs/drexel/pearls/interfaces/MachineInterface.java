@@ -152,6 +152,7 @@ public class MachineInterface extends Actor {
         if (coordinatesInResetButton(x,y)) {
             resetInterface();
         }
+        //if exit clicked set machine ui visibility to false (savannah)
             if (coordinatesInExitButton(x, y)){
                 setVisible(false);
               }
