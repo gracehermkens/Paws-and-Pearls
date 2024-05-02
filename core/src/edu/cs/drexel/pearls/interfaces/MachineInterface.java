@@ -14,7 +14,8 @@ public class MachineInterface extends Actor {
     private Texture strawTexture, lidTexture;
 
     private final Vector2 resetButtonPosition = new Vector2(500, 450);
-
+    //exit button position written by savannah
+    private final Vector2 exitButtonPosition = new Vector2(610, 450);
     private boolean showThaiTea = false;
     private boolean showMelonTea = false;
     private boolean showTaroTea = false;
@@ -151,22 +152,25 @@ public class MachineInterface extends Actor {
         if (coordinatesInResetButton(x,y)) {
             resetInterface();
         }
-            if (!inputsLocked) {
-                for (int i = 0; i < inputPositions.length; i++) {
-                 if (coordinatesInVector(x, y, inputPositions[i])) {
-                        if (inputs[i] != null) {
-                         inputs[i].select(x, y);
+            if (coordinatesInExitButton(x, y)){
+                setVisible(false);
+              }
+                if (!inputsLocked) {
+                    for (int i = 0; i < inputPositions.length; i++) {
+                     if (coordinatesInVector(x, y, inputPositions[i])) {
+                            if (inputs[i] != null) {
+                             inputs[i].select(x, y);
+                         }
                      }
                  }
-             }
-             for (int i = 0; i < inventoryPositions.length; i++) {
-                 if (coordinatesInVector(x, y, inventoryPositions[i])) {
-                     if (inventory[i] != null) {
-                        inventory[i].select(x, y);
+                 for (int i = 0; i < inventoryPositions.length; i++) {
+                     if (coordinatesInVector(x, y, inventoryPositions[i])) {
+                         if (inventory[i] != null) {
+                            inventory[i].select(x, y);
+                         }
                      }
                  }
-             }
-          }
+              }
 
       }
 
@@ -363,7 +367,14 @@ public class MachineInterface extends Actor {
         return x >= resetButtonPosition.x && x <= resetButtonPosition.x + buttonWidth &&
                 y >= resetButtonPosition.y && y <= resetButtonPosition.y + buttonHeight;
     }
+    //create exit button written by savannah
+    private boolean coordinatesInExitButton(float x, float y){
+        float buttonWidth = 60;
+        float buttonHeight = 50;
+        return x >= exitButtonPosition.x && x <= exitButtonPosition.x + buttonWidth &&
+                y >= exitButtonPosition.y && y <= exitButtonPosition.y + buttonHeight;
 
+    }
 
     // resetting position of teas and toppings
     // written by brooke
