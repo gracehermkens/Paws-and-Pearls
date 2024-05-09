@@ -38,6 +38,7 @@ public class CafeScreen extends BaseScreen {
 
         counter = new Counter();
         machineInterface = new MachineInterface();
+        machineInterface.setCounter(counter);
         Machine machine = new Machine(355, 490);
         player = new Player(new Vector2(320, 380));
         npc = new NPC(new Vector2(740, 80));

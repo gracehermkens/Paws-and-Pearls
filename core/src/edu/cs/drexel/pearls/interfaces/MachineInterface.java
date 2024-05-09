@@ -3,6 +3,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import edu.cs.drexel.pearls.entities.Counter;
 
 import java.util.Arrays;
 
@@ -22,12 +23,13 @@ public class MachineInterface extends Actor {
     private boolean showBoba = false;
     private boolean showMangoBoba = false;
 
-
     public boolean showStraw = false;
     private boolean showLid = false;
     private boolean inputsLocked = false;
     private boolean hasTea = false;
     private boolean hasTopping = false;
+    private Texture finalDrinkTexture;
+    private Counter counter;
 
     public InterfaceItem[] inputs;
     public static Vector2[] inputPositions = {
@@ -79,6 +81,9 @@ public class MachineInterface extends Actor {
         this.output = null;
     }
 
+    public void setCounter(Counter counter){
+        this.counter = counter;
+    }
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(this.texture, getX(), getY(), getWidth(), getHeight());
@@ -192,7 +197,6 @@ public class MachineInterface extends Actor {
         }
     }
 
-
     public void handleLift(float x, float y) {
         int[] landed = listly(x, y);
         hasTea = false;
@@ -262,6 +266,11 @@ public class MachineInterface extends Actor {
             }
             updateTeaLayers();
             updateToppingLayers();
+            updateFinalDrink();
+
+            if (counter != null){
+                counter.setFinalDrinkTexture(finalDrinkTexture);
+            }
         }
     }
 
@@ -316,34 +325,58 @@ public class MachineInterface extends Actor {
 
             }
         }
-
+    }
         // written by Grace
         // final drink
+    private void updateFinalDrink() {
         if (inputs[0] != null && inputs[1] != null) {
-            if (((inputs[0].name.equals("Thai Tea")) || (inputs[0].name.equals("Taro Tea")) || (inputs[0].name.equals("Melon Tea"))) && (inputs[1].name.equals("Boba") || (inputs[1].name.equals("Mango Popping Boba")))) {
-                showLid = true;
-                showStraw = true;
-                inputsLocked = true;
+            String inputName0 = inputs[0].name;
+            String inputName1 = inputs[1].name;
+                if (((inputs[0].name.equals("Thai Tea")) || (inputs[0].name.equals("Taro Tea")) || (inputs[0].name.equals("Melon Tea")))
+                        && (inputs[1].name.equals("Boba") || (inputs[1].name.equals("Mango Popping Boba")))) {
+                    showLid = true;
+                    showStraw = true;
+                    inputsLocked = true;
+                } else if (((inputs[1].name.equals("Thai Tea")) || (inputs[1].name.equals("Taro Tea")) || (inputs[1].name.equals("Melon Tea")))
+                        && (inputs[0].name.equals("Boba") || (inputs[0].name.equals("Mango Popping Boba")))) {
+                    showLid = true;
+                    showStraw = true;
+                    inputsLocked = true;
+                }
+                // written by Grace
+                // setting texture as corresponding made order (to be used for counter)
+
+                // thai tea drinks
+                if ((inputName0.equals("Thai Tea") && inputName1.equals("Boba")) || (inputName1.equals("Thai Tea") && inputName0.equals("Boba"))){
+                    finalDrinkTexture = new Texture("thaiBOrder.png");
+                } else if ((inputName0.equals("Thai Tea") && inputName1.equals("Mango Popping Boba")) || (inputName1.equals("Thai Tea") && inputName0.equals("Mango Popping Boba"))){
+                    finalDrinkTexture = new Texture ("thaiMOrder.png");
+                // melon tea drinks
+                } else if ((inputName0.equals("Melon Tea") && inputName1.equals("Boba")) || (inputName1.equals("Melon Tea") && inputName0.equals("Boba"))){
+                    finalDrinkTexture = new Texture ("melonBOrder.png");
+                } else if ((inputName0.equals("Melon Tea") && inputName1.equals("Mango Popping Boba")) || (inputName1.equals("Melon Tea") && inputName0.equals("Mango Popping Boba"))) {
+                    finalDrinkTexture = new Texture("melonMOrder.png");
+                // taro tea drinks
+                } else if ((inputName0.equals("Taro Tea") && inputName1.equals("Boba")) || (inputName1.equals("Taro Tea") && inputName0.equals("Boba"))){
+                    finalDrinkTexture = new Texture("taroBOrder.png");
+                } else if ((inputName0.equals("Taro Tea") && inputName1.equals("Mango Popping Boba")) || (inputName1.equals("Taro Tea") && inputName0.equals("Mango Popping Boba"))){
+                    finalDrinkTexture = new Texture ("taroMOrder.png");
+                } else {
+                    finalDrinkTexture = null;
+                }
+            } else {
+                showLid = false;
+                showStraw = false;
+                inputsLocked = false;
             }
-            else if (((inputs[1].name.equals("Thai Tea")) || (inputs[1].name.equals("Taro Tea")) || (inputs[1].name.equals("Melon Tea"))) && (inputs[0].name.equals("Boba") || (inputs[0].name.equals("Mango Popping Boba")))){
-                showLid = true;
-                showStraw = true;
-                inputsLocked = true;
-            }
-        }
-        else {
-            showLid = false;
-            showStraw = false;
-            inputsLocked = false;
-        }
     }
+
 
     public boolean coordinatesInVector(float x, float y, Vector2 vec) {
         float width = 64;
         float height = 64;
         return (x > vec.x) && (x < (vec.x + width)) && (y > vec.y) && (y < (vec.y + height));
     }
-
 
     public int[] listly(float x, float y) {
         for (int i = 0; i < inputPositions.length; i++) {
