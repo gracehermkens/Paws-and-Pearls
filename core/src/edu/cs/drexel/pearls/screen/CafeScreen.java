@@ -13,10 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import edu.cs.drexel.pearls.BobaCafe;
-import edu.cs.drexel.pearls.entities.Counter;
-import edu.cs.drexel.pearls.entities.Machine;
-import edu.cs.drexel.pearls.entities.NPC;
-import edu.cs.drexel.pearls.entities.Player;
+import edu.cs.drexel.pearls.entities.*;
 import edu.cs.drexel.pearls.interfaces.InterfaceItem;
 import edu.cs.drexel.pearls.interfaces.MachineInterface;
 
@@ -26,9 +23,9 @@ public class CafeScreen extends BaseScreen {
     Texture image;
     Stage stage;
     Player player;
-
     NPC npc;
     MachineInterface machineInterface;
+    Furniture furniture;
 
 
     public CafeScreen(final BobaCafe game) {
@@ -43,9 +40,9 @@ public class CafeScreen extends BaseScreen {
         machineInterface = new MachineInterface();
         Machine machine = new Machine(355, 490);
         player = new Player(new Vector2(320, 380));
-
-
         npc = new NPC(new Vector2(740, 80));
+        furniture = new Furniture(true, true, true,
+                true, true, true);
 
 
 
@@ -97,6 +94,7 @@ public class CafeScreen extends BaseScreen {
         stage.addActor(machine);
         stage.addActor(player);
         stage.addActor(npc);
+        stage.addActor(furniture);
 
 
         // Draw Interfaces Last :)
@@ -149,7 +147,8 @@ public class CafeScreen extends BaseScreen {
                             @Override
                             public void run() {
                                 npc.setPosition(new Vector2(0,  100));
-                                npc.jingle();;
+                                npc.heart = false;
+                                npc.jingle();
                             }
                         },
                                 (int) Math.floor(
