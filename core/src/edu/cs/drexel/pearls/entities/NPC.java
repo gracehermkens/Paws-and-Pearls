@@ -26,6 +26,8 @@ public class NPC extends Actor {
     private float speed = 60f;
     public boolean atCounter;
     public boolean heart;
+    private int tick = 0;
+    private int direction = 2; // front, right, back, left;
 
     public NPC(Vector2 startPosition) {
         super();
@@ -45,10 +47,39 @@ public class NPC extends Actor {
         position = new Vector2();
     }
 
+    // by vish
+    private String getDirectionID() {
+        float distance = position.dst(getX(), getY());
+        if (distance > 0.3f) {
+            float dy = (position.y - getY());
+            float dx = position.x - getX();
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx < 0) direction = 3;
+                else direction = 1;
+            } else {
+                if (dy < 0) direction = 2;
+                else direction = 0;
+            }
+        } else {
+            tick = 0;
+        }
+        switch (direction) {
+            case 1:
+                return "Right";
+            case 2:
+                return "Back";
+            case 3:
+                return "Left";
+            default:
+                return "Front";
+        }
+    }
 
     // modified by brooke
+    // modified by vish
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        this.texture = new Texture("bunny"+getDirectionID()+((tick/10)+1)+".PNG");
         batch.draw(this.texture, getX(), getY());
         float xOffset = 15;
         float yOffset = 120;
@@ -62,9 +93,10 @@ public class NPC extends Actor {
             batch.draw(spHeart, getX() + xOffset, getY() + yOffset);
             }
         else {
-                batch.draw(speechBubble, getX() + xOffset, getY() + yOffset);
-                batch.draw(dotDotDot, getX() + xOffset, getY() + yOffset);
+            batch.draw(speechBubble, getX() + xOffset, getY() + yOffset);
+            batch.draw(dotDotDot, getX() + xOffset, getY() + yOffset);
         }
+        tick = (tick + 1) % 40;
     }
 
 
