@@ -18,7 +18,7 @@ public class TitleScreen extends BaseScreen {
         super(game);
         batch = new SpriteBatch();
 
-        titleImage = new Texture("titlescreen2.png");
+        titleImage = new Texture("titleScreen.png");
     }
 
     @Override
