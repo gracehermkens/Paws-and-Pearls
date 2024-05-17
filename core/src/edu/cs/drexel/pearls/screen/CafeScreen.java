@@ -16,6 +16,7 @@ import edu.cs.drexel.pearls.BobaCafe;
 import edu.cs.drexel.pearls.entities.*;
 import edu.cs.drexel.pearls.interfaces.InterfaceItem;
 import edu.cs.drexel.pearls.interfaces.MachineInterface;
+import edu.cs.drexel.pearls.interfaces.TimerInterface;
 
 public class CafeScreen extends BaseScreen {
     SpriteBatch batch;
@@ -25,6 +26,7 @@ public class CafeScreen extends BaseScreen {
     Player player;
     NPC npc;
     MachineInterface machineInterface;
+    TimerInterface timerInterface;
     Furniture furniture;
 
 
@@ -38,13 +40,13 @@ public class CafeScreen extends BaseScreen {
 
         counter = new Counter();
         machineInterface = new MachineInterface();
+        timerInterface = new TimerInterface();
         machineInterface.setCounter(counter);
         Machine machine = new Machine(355, 490);
         player = new Player(new Vector2(320, 380));
         npc = new NPC(new Vector2(740, 80));
         furniture = new Furniture(true, true, true,
-                true, true, true, true, true,
-                true, true, true, true);
+                true, true, true);
 
 
 
@@ -97,10 +99,12 @@ public class CafeScreen extends BaseScreen {
         stage.addActor(player);
         stage.addActor(npc);
         stage.addActor(furniture);
+        stage.addActor(player);
 
 
         // Draw Interfaces Last :)
         stage.addActor(machineInterface);
+        stage.addActor(timerInterface);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -129,6 +133,13 @@ public class CafeScreen extends BaseScreen {
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             int x = Gdx.input.getX();
             int y = 600 - Gdx.input.getY();
+
+            // clicking timer
+            if (x > 5 && x < (73 + 5)) {
+                if (y > 521 && y < 600) {
+                    timerInterface.click();
+                }
+            }
 
             // clicking npc
             // code written by vish
