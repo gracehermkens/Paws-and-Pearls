@@ -43,7 +43,8 @@ public class CafeScreen extends BaseScreen {
         player = new Player(new Vector2(320, 380));
         npc = new NPC(new Vector2(740, 80));
         furniture = new Furniture(true, true, true,
-                true, true, true);
+                true, true, true, true, true,
+                true, true, true, true);
 
 
 
