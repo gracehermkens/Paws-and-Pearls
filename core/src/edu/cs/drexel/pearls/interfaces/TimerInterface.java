@@ -15,6 +15,10 @@ public class TimerInterface extends Actor {
     Texture digit_b;
     Texture digit_c;
     Texture digit_d;
+    Texture digit_w;
+    Texture digit_x;
+    Texture digit_y;
+    Texture digit_z;
     Texture menu;
 
     public boolean menuActive;
@@ -32,6 +36,10 @@ public class TimerInterface extends Actor {
         digit_b = new Texture("clock5.png");
         digit_c = new Texture("clock0.png");
         digit_d = new Texture("clock0.png");
+        digit_w = new Texture("timer2.png");
+        digit_x = new Texture("timer5.png");
+        digit_y = new Texture("timer0.png");
+        digit_z = new Texture("timer0.png");
         ticker = TimeUtils.nanoTime();
     }
 
@@ -86,6 +94,10 @@ public class TimerInterface extends Actor {
         digit_b = new Texture("clock"+k[1]+".png");
         digit_c = new Texture("clock"+k[2]+".png");
         digit_d = new Texture("clock"+k[3]+".png");
+        digit_w = new Texture("timer"+k[0]+".png");
+        digit_x = new Texture("timer"+k[1]+".png");
+        digit_y = new Texture("timer"+k[2]+".png");
+        digit_z = new Texture("timer"+k[3]+".png");
         if (TimeUtils.timeSinceNanos(ticker) > 1000000000) {
             if (timerActive) {time--;}
             if (time < 0) {time = 0;}
@@ -94,6 +106,13 @@ public class TimerInterface extends Actor {
 
         if (menuActive) {
             batch.draw(this.menu, 0, 0, 800, 600);
+            float z_in_x = 200;
+            float z_w = 100;
+            float z_y = 270;
+            batch.draw(this.digit_w, z_in_x + (z_w*0), z_y, 100, 160);
+            batch.draw(this.digit_x, z_in_x  + (z_w*1), z_y, 100, 160);
+            batch.draw(this.digit_y, z_in_x + 5 + (z_w*2), z_y, 100, 160);
+            batch.draw(this.digit_z, z_in_x + 5 + (z_w*3), z_y, 100, 160);
         }
     }
 }
