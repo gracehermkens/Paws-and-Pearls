@@ -104,8 +104,8 @@ public class CafeScreen extends BaseScreen {
         stage.addActor(player);
 
         // Draw Interfaces Last :)
-        stage.addActor(machineInterface);
         stage.addActor(timerInterface);
+        stage.addActor(machineInterface);
 
         Gdx.input.setInputProcessor(stage);
 
