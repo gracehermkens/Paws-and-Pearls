@@ -12,6 +12,7 @@ public class TitleScreen extends BaseScreen {
 
     SpriteBatch batch;
     Texture titleImage;
+    Texture titleBackground;
     float time = 0;
 
     public TitleScreen(final BobaCafe game) {
@@ -19,12 +20,14 @@ public class TitleScreen extends BaseScreen {
         batch = new SpriteBatch();
 
         titleImage = new Texture("titleScreen.png");
+        titleBackground = new Texture("titleScreenFinal.png");
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0.9f, 0.9f, 0.9f, 1);
         batch.begin();
+        batch.draw(titleBackground, 0, 0);
         batch.draw(titleImage, 0, 0);
         batch.end();
 
