@@ -16,15 +16,18 @@ import edu.cs.drexel.pearls.BobaCafe;
 import edu.cs.drexel.pearls.entities.*;
 import edu.cs.drexel.pearls.interfaces.InterfaceItem;
 import edu.cs.drexel.pearls.interfaces.MachineInterface;
+import edu.cs.drexel.pearls.interfaces.TimerInterface;
 
 public class CafeScreen extends BaseScreen {
     SpriteBatch batch;
     Counter counter;
     Texture image;
+
     Stage stage;
     Player player;
     NPC npc;
     MachineInterface machineInterface;
+    TimerInterface timerInterface;
     Furniture furniture;
 
 
@@ -36,14 +39,16 @@ public class CafeScreen extends BaseScreen {
         image = new Texture("cafeBackground.PNG");
 
 
+
         counter = new Counter();
         machineInterface = new MachineInterface();
+        timerInterface = new TimerInterface();
         machineInterface.setCounter(counter);
         Machine machine = new Machine(355, 490);
         player = new Player(new Vector2(320, 380));
         npc = new NPC(new Vector2(740, 80));
         furniture = new Furniture(true, true, true,
-                true, true, true);
+                true, true, true, true, true, true, true, true, true);
 
 
 
@@ -96,9 +101,10 @@ public class CafeScreen extends BaseScreen {
         stage.addActor(player);
         stage.addActor(npc);
         stage.addActor(furniture);
-
+        stage.addActor(player);
 
         // Draw Interfaces Last :)
+        stage.addActor(timerInterface);
         stage.addActor(machineInterface);
 
         Gdx.input.setInputProcessor(stage);
@@ -113,11 +119,8 @@ public class CafeScreen extends BaseScreen {
         ScreenUtils.clear(0.1f, 0.1f, 0.1f, 1);
         batch.begin();
         batch.draw(image, 0, 0);
-
         batch.end();
-
         input();
-
         counter.setBobaStatus(machineInterface.showStraw);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
@@ -128,6 +131,32 @@ public class CafeScreen extends BaseScreen {
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             int x = Gdx.input.getX();
             int y = 600 - Gdx.input.getY();
+
+            // clicking timer
+            if (x > 520 && x < (520 + 84)) {
+                if (y < 320+70 && y > 320) {
+                    timerInterface.click();
+                }
+            }
+
+            if (x > 617 && x < 662) {
+                if (y < 496 && y > 457) {
+                    timerInterface.close();
+                }
+            }
+            if (x > 124 && x < 241) {
+                if (y < 223 && y > 106) {
+                    timerInterface.reset();
+                }
+            }
+            if (x > 516 && x < 673) {
+                if (y < 223 && y > 106) {
+                    timerInterface.toggle();
+                }
+            }
+
+
+
 
             // clicking npc
             // code written by vish

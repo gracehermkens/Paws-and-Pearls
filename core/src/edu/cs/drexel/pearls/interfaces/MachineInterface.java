@@ -345,7 +345,6 @@ public class MachineInterface extends Actor {
                 }
                 // written by Grace
                 // setting texture as corresponding made order (to be used for counter)
-
                 // thai tea drinks
                 if ((inputName0.equals("Thai Tea") && inputName1.equals("Boba")) || (inputName1.equals("Thai Tea") && inputName0.equals("Boba"))){
                     finalDrinkTexture = new Texture("thaiBOrder.png");
