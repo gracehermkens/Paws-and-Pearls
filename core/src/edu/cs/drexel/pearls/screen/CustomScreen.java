@@ -21,6 +21,15 @@ public class CustomScreen extends BaseScreen {
     Texture baseFemale;
     Texture baseMale;
     Texture selectButton;
+    Texture femaleSkinColor1, femaleSkinColor2, femaleSkinColor3, femaleSkinColor4, femaleSkinColor5, femaleSkinColor6;
+    Texture maleSkinColor1, maleSkinColor2, maleSkinColor3, maleSkinColor4, maleSkinColor5, maleSkinColor6;
+    boolean showSkinColor1 = false;
+    boolean showSkinColor2 = false;
+    boolean showSkinColor3 = false;
+    boolean showSkinColor4 = false;
+    boolean showSkinColor5= false;
+    boolean showSkinColor6 = false;
+
     // coordinates for skin color
     int startX = 5; // Starting X position
     int startY = 20; // Starting Y position
@@ -31,15 +40,22 @@ public class CustomScreen extends BaseScreen {
         super(game);
         batch = new SpriteBatch();
         customScreen = new Texture("customScreen.png");
+        // skin color option textures
         skinColor1 = new Texture("skinColor1.png");
         skinColor2 = new Texture("skinColor2.png");
         skinColor3 = new Texture("skinColor3.png");
         skinColor4 = new Texture("skinColor4.png");
         skinColor5 = new Texture("skinColor5.png");
         skinColor6 = new Texture("skinColor6.png");
+
+        // female textures
         baseFemale = new Texture("player/female/skin0/Front1.png");
+
+        // male textures
         baseMale = new Texture("player/male/skin0/Front1.png");
+
         selectButton = new Texture("customSelect.png");
+
 
     }
     @Override
@@ -48,11 +64,16 @@ public class CustomScreen extends BaseScreen {
         batch.begin();
         batch.draw(customScreen, 0, 0);
 
+        baseFemale = new Texture("player/female/skin"+Global.color+"/Front1.png");
+        baseMale = new Texture("player/male/skin"+Global.color+"/Front1.png");
+
         // draw female base
         batch.draw(baseFemale, 20, 70, 400, 400);
 
         // draw male base
         batch.draw(baseMale, 400, 70, 400, 400);
+        // draw changing of skin colors
+
 
         // draw skin colors
         batch.draw(skinColor1, startX, startY);
