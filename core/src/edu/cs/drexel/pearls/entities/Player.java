@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import edu.cs.drexel.pearls.Global;
 
 public class Player extends Actor {
     private Texture texture;
@@ -13,11 +14,14 @@ public class Player extends Actor {
 
     public Player(Vector2 startPosition) {
         super();
-        texture = (new Texture("baseCharacter1.PNG"));
+        texture = (new Texture("player/female/skin0/Front1.png"));
         setPosition(startPosition.x, startPosition.y);
     }
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        String direction = "Front";
+        String frame = "1";
+        this.texture = new Texture("player/"+ Global.gender+"/skin"+Global.color+"/"+direction+frame+".png");
         batch.draw(this.texture, getX(), getY());
     }
 

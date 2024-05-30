@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import edu.cs.drexel.pearls.BobaCafe;
+import edu.cs.drexel.pearls.Global;
+
 public class CustomScreen extends BaseScreen {
     SpriteBatch batch;
     Texture customScreen;
@@ -35,8 +37,8 @@ public class CustomScreen extends BaseScreen {
         skinColor4 = new Texture("skinColor4.png");
         skinColor5 = new Texture("skinColor5.png");
         skinColor6 = new Texture("skinColor6.png");
-        baseFemale = new Texture("baseCharacter1.png");
-        baseMale = new Texture("baseCharacter2.png");
+        baseFemale = new Texture("player/female/skin0/Front1.png");
+        baseMale = new Texture("player/male/skin0/Front1.png");
         selectButton = new Texture("customSelect.png");
 
     }
@@ -89,26 +91,32 @@ public class CustomScreen extends BaseScreen {
                     // skin color 1
                     if (((x >= 340) && (x <= 385)) && ((y >= 380) && (y <= 430))) {
                         System.out.println("Skin Color 1 Selected");
+                        Global.color = "1";
                     }
                     // skin color 2
                     else if ((x >= 440 ) && (x <= 490) && ((y >= 380) && (y <= 430))) {
                         System.out.println("Skin Color 2 Selected");
+                        Global.color = "2";
                     }
                     // skin color 3
                     else if ((x >= 335) && (x <= 380) && ((y >= 265) && (y <= 310))) {
                         System.out.println("Skin Color 3 Selected");
+                        Global.color = "3";
                     }
                     // skin color 4
                     else if ((x >= 445) && (x <= 490) && ((y >= 260) && (y <= 305))) {
                         System.out.println("Skin Color 4 Selected");
+                        Global.color = "4";
                     }
                     // skin color 5
                     else if ((x >= 340) && (x <= 385) && ((y >= 150) && (y <= 195))) {
                         System.out.println("Skin Color 5 Selected");
+                        Global.color = "5";
                     }
                     // skin color 6
                     else if ((x >= 445) && (x <= 490) && ((y >= 150) && (y <= 200))) {
                         System.out.println("Skin Color 6 Selected");
+                        Global.color = "6";
                     }
                 }
             }
